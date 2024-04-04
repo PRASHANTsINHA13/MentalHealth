@@ -1,3 +1,4 @@
+
 import nltk
 nltk.download('popular')
 from nltk.stem import WordNetLemmatizer
@@ -20,8 +21,8 @@ from spacy_langdetect import LanguageDetector
 
 # translator pipeline for english to swahili translations
 eng_swa_model_checkpoint = "Helsinki-NLP/opus-mt-en-swc"
-eng_swa_tokenizer = AutoTokenizer.from_pretrained("./model/eng_swa_model/")
-eng_swa_model = AutoModelForSeq2SeqLM.from_pretrained("./model/eng_swa_model/")
+eng_swa_tokenizer = AutoTokenizer.from_pretrained("C:\Users\prash\mentalhealthGpt\Mental-health-Chatbot\eng_swa_model")
+eng_swa_model = AutoModelForSeq2SeqLM.from_pretrained("C:\Users\prash\mentalhealthGpt\Mental-health-Chatbot\swa_eng_model")
 
 eng_swa_translator = pipeline(
     "text2text-generation",
