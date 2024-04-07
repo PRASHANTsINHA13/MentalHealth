@@ -5,7 +5,8 @@ import Link from "next/link";
 import { toast } from "sonner";
 import SubmitButton from "./submit-button";
 
-function Form() {
+function Form(props: { action: (formData: FormData) => void }) {
+  const { action } = props;
   return (
     <main className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
       <h1
@@ -18,7 +19,7 @@ function Form() {
           <h2 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
             Create an account
           </h2>
-          <form className="space-y-4 md:space-y-6" action="#">
+          <form className="space-y-4 md:space-y-6" action={action}>
             <fieldset>
               <label htmlFor="name" className="label-text">
                 Your name
@@ -55,8 +56,8 @@ function Form() {
                 type="password"
                 name="password"
                 id="password"
-                placeholder="Your password"
-                className="input input-bordered input-primary w-full"
+                placeholder="Your password "
+                className="input input-bordered input-primary w-full valid:"
                 required
                 minLength={4}
                 maxLength={8}

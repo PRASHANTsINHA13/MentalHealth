@@ -5,12 +5,10 @@ import type {
   User,
 } from "next-auth";
 import CredentialsProvder from "next-auth/providers/credentials";
-import { DrizzleAdapter } from "@auth/drizzle-adapter";
-import { db } from "@/db";
 
 const nextAuthConfig = {
   secret: process.env.NEXT_AUTH_SECRET,
-  adapter: DrizzleAdapter(db),
+
   session: {
     strategy: "jwt",
   },
