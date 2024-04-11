@@ -1,6 +1,3 @@
-import { BrainCircuit } from "lucide-react";
-import React from "react";
-
 interface ChatProps {
   message: string;
   /**wether sent by user or by bot */

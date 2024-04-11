@@ -1,7 +1,7 @@
 "use client";
 import React, { use, useEffect } from "react";
 import { useFormState } from "react-dom";
-import { ibmPlex } from "@/ui/fonts";
+import { ibmPlex } from "@/components/fonts";
 import Link from "next/link";
 import { toast } from "sonner";
 import SubmitButton from "./submit-button";
@@ -26,7 +26,7 @@ function Form(props: {
       <h1
         className={`${ibmPlex.className} mb-6 text-4xl font-semibold  bg-gradient-to-r from-primary  to-secondary inline-block text-transparent bg-clip-text`}
       >
-        AI health Chatbot
+        Mental health care bot
       </h1>
       <section className="w-full bg-base-300 border-base-300 rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 ">
         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">

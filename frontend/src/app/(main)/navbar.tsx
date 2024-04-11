@@ -1,20 +1,19 @@
 import React from "react";
 import Link from "next/link";
-import { ibmPlex } from "../../ui/fonts";
+import { ibmPlex } from "../../components/fonts";
 import { signOut } from "@/config/auth";
+import LogoutButton from "./dashboard/logout-button";
 
 function Navbar() {
   return (
-    <nav className="navbar bg-base-100 shadow-md items-center">
+    <nav className="navbar bg-base-100 shadow-md items-center justify-between">
       <div className="flex-1">
         <Link
           href="/dashboard"
-          className={
-            ibmPlex.className +
-            "btn btn-ghost text-xl bg-gradient-to-r from-primary  to-secondary inline-block text-transparent bg-clip-text"
-          }
+          className={`
+            ${ibmPlex.className}    text-xl bg-gradient-to-r from-primary  to-secondary inline-block text-transparent bg-clip-text`}
         >
-          Ai health app
+          Mental health care bot
         </Link>
       </div>
       <div className="flex-none gap-2">
@@ -44,9 +43,7 @@ function Navbar() {
                   await signOut();
                 }}
               >
-                <button type="submit" className="">
-                  Logout
-                </button>
+                <LogoutButton />
               </form>
             </li>
           </ul>

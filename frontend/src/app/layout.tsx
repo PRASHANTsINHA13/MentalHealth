@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import { Toaster } from "sonner";
 
 import "./globals.css";
-import { inter } from "@/ui/fonts";
+import { inter } from "@/components/fonts";
 
 export const metadata: Metadata = {
-  title: "AI mental chat-bot app",
+  title: "Mental health care bot",
 };
 
 export default function RootLayout({
