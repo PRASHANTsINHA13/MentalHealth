@@ -1,10 +1,4 @@
-import type {
-  Awaitable,
-  NextAuthOptions,
-  RequestInternal,
-  User,
-} from "next-auth";
-import CredentialsProvder from "next-auth/providers/credentials";
+import type { NextAuthConfig } from "next-auth";
 
 const nextAuthConfig = {
   secret: process.env.NEXT_AUTH_SECRET,
@@ -12,29 +6,34 @@ const nextAuthConfig = {
   session: {
     strategy: "jwt",
   },
-  providers: [
-    CredentialsProvder({
-      name: "Credentials",
 
-      credentials: {
-        email: { label: "Username", type: "text", placeholder: "Your email" },
-        password: {
-          label: "Password",
-          type: "Your password",
-          placeholder: "Your password",
-        },
-      },
-      authorize: function (
-        credentials: Record<"email" | "password", string> | undefined,
-        req: Pick<RequestInternal, "body" | "query" | "headers" | "method">
-      ): Awaitable<User | null> {
-        return { id: "123", name: "some name", email: "somemeail" };
-      },
-    }),
-  ],
   pages: {
     signIn: "/login",
     newUser: "/signup",
   },
-} satisfies NextAuthOptions;
+  callbacks: {
+    authorized: ({ auth, request }) => {
+      const { nextUrl } = request;
+
+      const isLoggedIn = Boolean(auth?.user);
+      if (
+        nextUrl.pathname.startsWith("/dashboard") ||
+        nextUrl.pathname.startsWith("/temp")
+      ) {
+        if (isLoggedIn) return true;
+        return false;
+      } else if (isLoggedIn) {
+        const callbackUrl = nextUrl.searchParams.get("callbackUrl");
+        if (callbackUrl !== null) {
+          return Response.redirect(callbackUrl);
+        }
+
+        return Response.redirect(new URL("/dashboard", nextUrl));
+      }
+
+      return true;
+    },
+  },
+  providers: [],
+} satisfies NextAuthConfig;
 export default nextAuthConfig;

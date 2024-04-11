@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Toaster } from "sonner";
 
 import "./globals.css";
-import { inter } from "@/app/ui/fonts";
+import { inter } from "@/ui/fonts";
 
 export const metadata: Metadata = {
   title: "AI mental chat-bot app",
@@ -17,7 +17,7 @@ export default function RootLayout({
     <html lang="en" data-theme="cupcake">
       <body className={inter.className}>
         {children}
-        <Toaster />
+        <Toaster richColors />
       </body>
     </html>
   );

@@ -1,25 +1,16 @@
 "use client";
-import React, { use, useEffect } from "react";
-import { useFormState } from "react-dom";
 import { ibmPlex } from "@/ui/fonts";
 import Link from "next/link";
-import { toast } from "sonner";
+import React from "react";
+import { useFormState } from "react-dom";
 import SubmitButton from "./submit-button";
-import { ServerActionResponse } from "@/app/actions/register-user/types";
 
-function Form(props: {
-  action: (
-    prevState: any,
-    formData: FormData
-  ) => Promise<ServerActionResponse | undefined>;
+function LoginForm({
+  action,
+}: {
+  action: (prevState: any, formData: FormData) => Promise<string | undefined>;
 }) {
-  const { action } = props;
-  const [state, formAction] = useFormState(action, undefined);
-  useEffect(() => {
-    if (state?.type == "error") {
-      toast.error(state.message, {});
-    }
-  }, [state]);
+  const [_, serverAction] = useFormState(action, undefined);
 
   return (
     <main className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -31,23 +22,9 @@ function Form(props: {
       <section className="w-full bg-base-300 border-base-300 rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 ">
         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
           <h2 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-            Create an account
+            Login to your account
           </h2>
-          <form className="space-y-4 md:space-y-6" action={formAction}>
-            <fieldset>
-              <label htmlFor="name" className="label-text">
-                Your name
-              </label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                className="input input-bordered input-primary w-full"
-                placeholder="Your name"
-                required
-              />
-            </fieldset>
-
+          <form className="space-y-4 md:space-y-6" action={serverAction}>
             <fieldset>
               <label htmlFor="email" className="label-text">
                 Your email
@@ -70,8 +47,8 @@ function Form(props: {
                 type="password"
                 name="password"
                 id="password"
-                placeholder="Your password "
-                className="input input-bordered input-primary w-full valid:"
+                placeholder="Your password"
+                className="input input-bordered input-primary w-full"
                 required
                 minLength={4}
                 maxLength={8}
@@ -79,10 +56,11 @@ function Form(props: {
             </fieldset>
 
             <SubmitButton />
+
             <p className="text-sm font-light text-gray-500 dark:text-gray-400 space-x-2">
-              <span>Already have an account?</span>
-              <Link href="/login" replace className="link link-primary">
-                Login here
+              <span>Don't have an account?</span>
+              <Link href="/signup" replace className="link link-primary">
+                Signup here
               </Link>
             </p>
           </form>
@@ -92,4 +70,4 @@ function Form(props: {
   );
 }
 
-export default Form;
+export default LoginForm;
