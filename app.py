@@ -7,7 +7,8 @@ lemmatizer = WordNetLemmatizer()
 import pickle
 import numpy as np
 from keras.models import load_model
-model = load_model('model.h5')
+model = load_model(r"C:\Users\prash\Mental-health-Chatbot\model.h5")
+
 import json
 import random
 intents = json.loads(open('intents.json').read())
@@ -57,12 +58,22 @@ def chatbot_response(msg):
     ints = predict_class(msg, model)
     res = getResponse(ints, intents)
     return res
-from flask import Flask, render_template, request
+from flask import Flask, redirect, render_template, request, url_for
 app = Flask(__name__)
 app.static_folder = 'static'
 @app.route("/")
 def home():
     return render_template("index.html")
+@app.route("/login",methods = ['POST', 'GET'])
+def login():
+    if request.method == 'POST':
+        user = request.form['email']
+        print(user)
+        return redirect("/")
+    else:
+        user = request.args.get('nm')
+        return render_template("signup.html")
+
 @app.route("/get")
 def get_bot_response():
     userText = request.args.get('msg')
