@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1712417402439,
-      "tag": "0000_funny_ghost_rider",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1712431074091,
-      "tag": "0001_adorable_shinobi_shaw",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1712512938482,
-      "tag": "0002_rainy_energizer",
+      "when": 1712852041320,
+      "tag": "0000_easy_micromax",
       "breakpoints": true
     }
   ]
