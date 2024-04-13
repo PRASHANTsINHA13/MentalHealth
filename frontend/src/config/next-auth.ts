@@ -24,7 +24,7 @@ const nextAuthConfig = {
           return Response.redirect(callbackUrl);
         }
 
-        return Response.redirect(new URL("/dashboard/chats", nextUrl));
+        return Response.redirect(new URL("/dashboard", nextUrl));
       }
 
       return true;
