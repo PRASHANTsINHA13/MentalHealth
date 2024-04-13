@@ -9,17 +9,13 @@ const nextAuthConfig = {
 
   pages: {
     signIn: "/login",
-    newUser: "/signup",
   },
   callbacks: {
     authorized: ({ auth, request }) => {
       const { nextUrl } = request;
 
       const isLoggedIn = Boolean(auth?.user);
-      if (
-        nextUrl.pathname.startsWith("/dashboard") ||
-        nextUrl.pathname.startsWith("/temp")
-      ) {
+      if (nextUrl.pathname.startsWith("/dashboard")) {
         if (isLoggedIn) return true;
         return false;
       } else if (isLoggedIn) {
@@ -28,7 +24,7 @@ const nextAuthConfig = {
           return Response.redirect(callbackUrl);
         }
 
-        return Response.redirect(new URL("/dashboard", nextUrl));
+        return Response.redirect(new URL("/dashboard/chats", nextUrl));
       }
 
       return true;

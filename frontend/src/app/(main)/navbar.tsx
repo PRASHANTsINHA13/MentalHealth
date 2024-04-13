@@ -3,15 +3,19 @@ import Link from "next/link";
 import { ibmPlex } from "../../ui/fonts";
 import { signOut } from "@/config/auth";
 import LogoutButton from "./logout-button";
+import { auth } from "@/config/auth";
 
-function Navbar() {
+async function Navbar() {
+  const sessionData = await auth();
+  sessionData?.user.name;
+  const dicebearUrl = `https://api.dicebear.com/8.x/identicon/svg?seed=${sessionData?.user?.name}`;
   return (
     <nav className="navbar bg-base-100 shadow-md items-center justify-between">
       <div className="flex-1">
         <Link
-          href="/dashboard"
+          href="/dashboard/chats"
           className={`
-            ${ibmPlex.className}    text-xl bg-gradient-to-r from-primary  to-secondary inline-block text-transparent bg-clip-text`}
+            ${ibmPlex.className} text-xl bg-gradient-to-r from-primary  to-secondary inline-block text-transparent bg-clip-text`}
         >
           Mental health care bot
         </Link>
@@ -28,7 +32,7 @@ function Navbar() {
                 width={20}
                 height={20}
                 alt="Profile picture"
-                src="https://api.dicebear.com/8.x/identicon/svg"
+                src={dicebearUrl}
               />
             </div>
           </div>

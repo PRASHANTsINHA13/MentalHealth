@@ -64,7 +64,7 @@ export async function prompt(formData: FormData) {
       });
     }
 
-    redirect(`/dashboard/${uuid}`);
+    redirect(`/dashboard/chats/${uuid}`);
   } else {
     console.log("block executed");
     await db
@@ -100,6 +100,6 @@ export async function prompt(formData: FormData) {
       });
     }
 
-    revalidatePath(`/dashboard/${chatId}`);
+    revalidatePath(`/dashboard/chats/${chatId}`);
   }
 }
