@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { ibmPlex } from "../../ui/fonts";
 import { signOut } from "@/config/auth";
-import LogoutButton from "./dashboard/logout-button";
+import LogoutButton from "./logout-button";
 
 function Navbar() {
   return (
