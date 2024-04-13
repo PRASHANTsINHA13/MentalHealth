@@ -4,7 +4,7 @@ import { useOptimistic } from "react";
 import MessageThread from "./message-thread";
 import PromptInput from "./prompt-input";
 import { ChatThreadProps } from "./type";
-import { randomUUID } from "crypto";
+import { v4 as uuidv4 } from "uuid";
 
 function ChatWindow(props: { chatId?: string; chatData: ChatThreadProps[] }) {
   const { chatId, chatData } = props;
@@ -14,7 +14,7 @@ function ChatWindow(props: { chatId?: string; chatData: ChatThreadProps[] }) {
   >(chatData, (state, newChat) => [
     ...state,
     {
-      id: "123",
+      id: uuidv4(),
       composedBy: "user",
       message: newChat,
       isLocallyAdded: true,
