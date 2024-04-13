@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { ibmPlex } from "../../components/fonts";
+import { ibmPlex } from "../../ui/fonts";
 import { signOut } from "@/config/auth";
 import LogoutButton from "./dashboard/logout-button";
 

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Toaster } from "sonner";
 
 import "./globals.css";
-import { inter } from "@/components/fonts";
+import { inter } from "@/ui/fonts";
 
 export const metadata: Metadata = {
   title: "Mental health care bot",

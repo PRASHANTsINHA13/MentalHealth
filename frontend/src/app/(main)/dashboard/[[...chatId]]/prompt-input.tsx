@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from "react";
+import React, { ElementRef, useEffect, useRef } from "react";
 import { prompt } from "@/app/actions/prompt";
 import { Disc3, SendHorizonal } from "lucide-react";
 import { useFormStatus } from "react-dom";
@@ -12,6 +12,11 @@ function PromptInput({
   addOptimisticChat?: (message: string) => void;
 }) {
   const formRef = useRef<HTMLFormElement>(null);
+  const inputRef = useRef<ElementRef<"input">>(null);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   return (
     <form
@@ -35,6 +40,7 @@ function PromptInput({
         type="text"
         className="input rounded-xl w-full bg-base-300 focus:bg-base-300 focus:border-none focus:outline-none"
         placeholder="Message with this bot"
+        ref={inputRef}
       />
 
       <SubmitPromptButton />

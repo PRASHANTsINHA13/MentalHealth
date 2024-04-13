@@ -1,7 +1,7 @@
 "use client";
 import React, { use, useEffect } from "react";
 import { useFormState } from "react-dom";
-import { ibmPlex } from "@/components/fonts";
+import { ibmPlex } from "@/ui/fonts";
 import Link from "next/link";
 import { toast } from "sonner";
 import SubmitButton from "./submit-button";

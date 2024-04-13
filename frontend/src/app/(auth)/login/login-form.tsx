@@ -1,5 +1,5 @@
 "use client";
-import { ibmPlex } from "@/components/fonts";
+import { ibmPlex } from "@/ui/fonts";
 import Link from "next/link";
 import React from "react";
 import { useFormState } from "react-dom";

@@ -41,9 +41,28 @@ export async function prompt(formData: FormData) {
       params.set("msg", prompt);
       const url = new URL("/get", process.env.AI_MODEL_URL);
 
-      // const aiResponse = await fetch(`${url.toString()}?${params.toString()}`);
-      // const aiOutput = await aiResponse.text();
-    } catch (e) {}
+      const aiResponse = await fetch(`${url.toString()}?${params.toString()}`);
+      if (!aiResponse.ok) {
+        throw new Error("some thing gone wrong in model");
+      }
+      const aiOutput = await aiResponse.text();
+
+      await db
+        .insert(chats)
+        .values({ sessionId: uuid, userType: "bot", messageString: aiOutput });
+    } catch (e) {
+      if (e instanceof Error) {
+        console.log(e.message);
+      } else {
+        console.log(e);
+      }
+      await db.insert(chats).values({
+        sessionId: uuid,
+        userType: "bot",
+        messageString:
+          "Sorry, I am not able to understand your prompt. Could you please rephrase it?",
+      });
+    }
 
     redirect(`/dashboard/${uuid}`);
   } else {
@@ -56,9 +75,30 @@ export async function prompt(formData: FormData) {
       const params = new URLSearchParams();
       params.set("msg", prompt);
       const url = new URL("/get", process.env.AI_MODEL_URL);
-      // const aiResponse = await fetch(`${url.toString()}?${params.toString()}`);
-      // const aiOutput = await aiResponse.text();
-    } catch (e) {}
+      const aiResponse = await fetch(`${url.toString()}?${params.toString()}`);
+      if (!aiResponse.ok) {
+        throw new Error("some thing gone wrong in model");
+      }
+      const aiOutput = await aiResponse.text();
+      console.log(aiOutput);
+      await db.insert(chats).values({
+        sessionId: chatId,
+        userType: "bot",
+        messageString: aiOutput,
+      });
+    } catch (e) {
+      if (e instanceof Error) {
+        console.log(e.message);
+      } else {
+        console.log(e);
+      }
+      await db.insert(chats).values({
+        sessionId: chatId,
+        userType: "bot",
+        messageString:
+          "Sorry, I am not able to understand your prompt. Could you please rephrase it?",
+      });
+    }
 
     revalidatePath(`/dashboard/${chatId}`);
   }
