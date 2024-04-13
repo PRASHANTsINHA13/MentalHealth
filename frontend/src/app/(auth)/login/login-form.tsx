@@ -4,14 +4,31 @@ import Link from "next/link";
 import React from "react";
 import { useFormState } from "react-dom";
 import SubmitButton from "./submit-button";
+import { loginSchema } from "@/app/actions/login/models";
+import { toast } from "sonner";
 
 function LoginForm({
   action,
 }: {
   action: (prevState: any, formData: FormData) => Promise<string | undefined>;
 }) {
-  const [_, serverAction] = useFormState(action, undefined);
+  const [_, formAction] = useFormState(action, undefined);
 
+  async function onFormSubmit(formData: FormData) {
+    const parsedResult = loginSchema.safeParse(Object.fromEntries(formData));
+    if (parsedResult.success) {
+      formAction(formData);
+    } else {
+      const flattendError = parsedResult.error.flatten().fieldErrors;
+      if (flattendError.email) {
+        toast.error(`email ${flattendError.email[0]}`);
+      }
+
+      if (flattendError.password) {
+        toast.error(`password ${flattendError.password[0]}`);
+      }
+    }
+  }
   return (
     <main className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
       <h1
@@ -24,7 +41,7 @@ function LoginForm({
           <h2 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
             Login to your account
           </h2>
-          <form className="space-y-4 md:space-y-6" action={serverAction}>
+          <form className="space-y-4 md:space-y-6" action={onFormSubmit}>
             <fieldset>
               <label htmlFor="email" className="label-text">
                 Your email
