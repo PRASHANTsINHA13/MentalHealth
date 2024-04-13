@@ -1,15 +1,27 @@
 "use client";
 import React, { useRef } from "react";
 import { prompt } from "@/app/actions/prompt";
-import SubmitPromptButton from "../submit-prompt-button";
+import { Disc3, SendHorizonal } from "lucide-react";
+import { useFormStatus } from "react-dom";
 
-function PromptInput({ chatId }: { chatId?: string }) {
+function PromptInput({
+  chatId,
+  addOptimisticChat,
+}: {
+  chatId?: string;
+  addOptimisticChat?: (message: string) => void;
+}) {
   const formRef = useRef<HTMLFormElement>(null);
 
   return (
     <form
       action={async (formData) => {
         formRef.current?.reset();
+        const chatMessage = formData.get("prompt")?.toString();
+        if (addOptimisticChat && chatMessage) {
+          addOptimisticChat(chatMessage);
+        }
+
         await prompt(formData);
       }}
       ref={formRef}
@@ -31,3 +43,21 @@ function PromptInput({ chatId }: { chatId?: string }) {
 }
 
 export default PromptInput;
+
+function SubmitPromptButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <button
+      disabled={pending}
+      type="submit"
+      className="btn btn-circle rounded-xl btn-primary   "
+    >
+      {pending ? (
+        <Disc3 className="animate-spin text-inherit text-base" />
+      ) : (
+        <SendHorizonal />
+      )}
+    </button>
+  );
+}

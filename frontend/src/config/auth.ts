@@ -42,4 +42,24 @@ export const { auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
+  callbacks: {
+    jwt: async ({ token }) => {
+      const { email } = token;
+      if (!email) {
+        return token;
+      }
+      const userData = await db
+        .select()
+        .from(users)
+        .where(eq(users.email, email));
+      token.userId = userData[0].id;
+
+      return token;
+    },
+
+    session: async ({ session, token }) => {
+      session.user.userId = token.userId as unknown as string | undefined;
+      return session;
+    },
+  },
 });

@@ -1,4 +1,5 @@
 import NextAuth from "next-auth";
+import { DefaultJWT, JWT } from "@auth/core";
 
 declare module "next-auth" {
   /**
@@ -6,7 +7,15 @@ declare module "next-auth" {
    */
   interface Session {
     user: {
-      id: string;
+      userId?: string;
+      name: string;
+      email: string;
     };
+  }
+}
+
+declare module "@auth/core" {
+  interface JWT {
+    userId: string;
   }
 }
