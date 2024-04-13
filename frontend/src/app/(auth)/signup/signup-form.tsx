@@ -1,11 +1,12 @@
 "use client";
-import React, { use, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useFormState } from "react-dom";
 import { ibmPlex } from "@/ui/fonts";
 import Link from "next/link";
 import { toast } from "sonner";
 import SubmitButton from "./submit-button";
 import { ServerActionResponse } from "@/app/actions/register-user/types";
+import { formSchema } from "@/app/actions/register-user/models";
 
 function Form(props: {
   action: (
@@ -21,6 +22,24 @@ function Form(props: {
     }
   }, [state]);
 
+  async function onFormSubmit(formData: FormData) {
+    const parsedResult = formSchema.safeParse(Object.fromEntries(formData));
+    if (parsedResult.success) {
+      formAction(formData);
+    } else {
+      const flattendError = parsedResult.error.flatten().fieldErrors;
+      if (flattendError.email) {
+        toast.error(`email ${flattendError.email[0]}`);
+      }
+      if (flattendError.name) {
+        toast.error(`name ${flattendError.name[0]}`);
+      }
+      if (flattendError.password) {
+        toast.error(`password ${flattendError.password[0]}`);
+      }
+    }
+  }
+
   return (
     <main className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
       <h1
@@ -33,7 +52,7 @@ function Form(props: {
           <h2 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
             Create an account
           </h2>
-          <form className="space-y-4 md:space-y-6" action={formAction}>
+          <form className="space-y-4 md:space-y-6" action={onFormSubmit}>
             <fieldset>
               <label htmlFor="name" className="label-text">
                 Your name
