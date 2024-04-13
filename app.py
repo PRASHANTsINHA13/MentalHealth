@@ -6,7 +6,8 @@ lemmatizer = WordNetLemmatizer()
 import pickle
 import numpy as np
 from keras.models import load_model
-model = load_model('model.h5')
+model = load_model(r"C:\Users\prash\Mental-health-Chatbot\model.h5")
+
 import json
 import random
 
@@ -105,31 +106,25 @@ def getResponse(ints, intents_json):
         return "Sorry, I didn't understand that."
 
 def chatbot_response(msg):
-    doc = nlp(msg)
-    detected_language = doc._.language['language']
-    print(f"Detected language chatbot_response:- {detected_language}")
-    
-    chatbotResponse = "Loading bot response..........."
-
-    if detected_language == "en":
-        res = getResponse(predict_class(msg, model), intents)
-        chatbotResponse = res
-        print("en_sw chatbot_response:- ", res)
-    elif detected_language == 'sw':
-        translated_msg = translate_text_swa_eng(msg)
-        res = getResponse(predict_class(translated_msg, model), intents)
-        chatbotResponse = translate_text_eng_swa(res)
-        print("sw_en chatbot_response:- ", chatbotResponse)
-
-    return chatbotResponse
-
-    
-from flask import Flask, render_template, request
+    ints = predict_class(msg, model)
+    res = getResponse(ints, intents)
+    return res
+from flask import Flask, redirect, render_template, request, url_for
 app = Flask(__name__)
 app.static_folder = 'static'
 @app.route("/")
 def home():
     return render_template("index.html")
+@app.route("/login",methods = ['POST', 'GET'])
+def login():
+    if request.method == 'POST':
+        user = request.form['email']
+        print(user)
+        return redirect("/")
+    else:
+        user = request.args.get('nm')
+        return render_template("signup.html")
+
 @app.route("/get")
 def get_bot_response():
     userText = request.args.get('msg')
