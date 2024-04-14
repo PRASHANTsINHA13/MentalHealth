@@ -1,16 +1,30 @@
 import nltk
-nltk.download('popular')#  Natural Language Toolkit (NLTK) library installed will download and
-# install a collection of popular NLTK data packages, including corpora,
-# models etc
 from nltk.stem import WordNetLemmatizer
-lemmatizer = WordNetLemmatizer()
 import pickle
 import numpy as np
 from keras.models import load_model
-model = load_model(r"C:\Users\prash\Mental-health-Chatbot\model.h5")
-
+from flask import Flask, redirect, render_template, request, url_for
+import os
 import json
 import random
+
+
+# When you install the Natural Language Toolkit (NLTK) library, it automatically downloads 
+# and installs a variety of popular NLTK data packages, such as corpora and models.
+
+nltk.download('popular')
+
+lemmatizer = WordNetLemmatizer()
+
+
+
+# this code picks file model.h5 from current working directory 
+# example path that will be formed C:\Users\user_name\Documents\AI-Mentalchatbot\model.h5
+current_directory = os.getcwd()
+path_to_be_joined = 'model.h5'
+model = load_model(os.path.join(current_directory,path_to_be_joined))
+
+
 intents = json.loads(open('intents.json').read())
 words = pickle.load(open('texts.pkl','rb'))
 classes = pickle.load(open('labels.pkl','rb'))
@@ -20,6 +34,7 @@ def clean_up_sentence(sentence):
     # stem each word - create short form for word
     sentence_words = [lemmatizer.lemmatize(word.lower()) for word in sentence_words]
     return sentence_words
+
 # return bag of words array: 0 or 1 for each word in the bag that exists in the sentence
 def bow(sentence, words, show_details=True):
     # tokenize the pattern
@@ -34,6 +49,7 @@ def bow(sentence, words, show_details=True):
                 if show_details:
                     print ("found in bag: %s" % w)
     return(np.array(bag))
+
 def predict_class(sentence, model):
     # filter out predictions below a threshold
     p = bow(sentence, words,show_details=False)
@@ -58,25 +74,21 @@ def chatbot_response(msg):
     ints = predict_class(msg, model)
     res = getResponse(ints, intents)
     return res
-from flask import Flask, redirect, render_template, request, url_for
+
+
+# Code for flask server starts from here
+port = 5000
 app = Flask(__name__)
 app.static_folder = 'static'
+
 @app.route("/")
 def home():
     return render_template("index.html")
-@app.route("/login",methods = ['POST', 'GET'])
-def login():
-    if request.method == 'POST':
-        user = request.form['email']
-        print(user)
-        return redirect("/")
-    else:
-        user = request.args.get('nm')
-        return render_template("signup.html")
 
 @app.route("/get")
 def get_bot_response():
     userText = request.args.get('msg')
     return chatbot_response(userText)
-if __name__ == "__main__":
-    app.run()
+
+if __name__ == "_main_":
+    app.run(host="0.0.0.0", port=port) # will run server on port 5000
