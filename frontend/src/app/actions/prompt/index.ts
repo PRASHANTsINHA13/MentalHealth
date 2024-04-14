@@ -67,7 +67,6 @@ export async function prompt(formData: FormData) {
 
     redirect(`/dashboard/chats/${uuid}`);
   } else {
-    console.log("block executed");
     await db
       .insert(chats)
       .values({ sessionId: chatId, userType: "user", messageString: prompt });

@@ -4,6 +4,7 @@ import pickle
 import numpy as np
 from keras.models import load_model
 from flask import Flask, redirect, render_template, request, url_for
+from flask_cors import CORS
 import os
 import json
 import random
@@ -79,6 +80,7 @@ def chatbot_response(msg):
 # Code for flask server starts from here
 port = 5000
 app = Flask(__name__)
+CORS(app)
 app.static_folder = 'static'
 
 @app.route("/")
