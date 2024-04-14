@@ -23,8 +23,13 @@ const nextAuthConfig = {
         if (callbackUrl !== null) {
           return Response.redirect(callbackUrl);
         }
-
-        return Response.redirect(new URL("/dashboard", nextUrl));
+        //FIXME: refactor this code
+        if (
+          nextUrl.pathname !== "/" &&
+          !nextUrl.pathname.startsWith("/static")
+        ) {
+          return Response.redirect(new URL("/dashboard/chats", nextUrl));
+        }
       }
 
       return true;

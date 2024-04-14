@@ -20,7 +20,7 @@ on Windows system
 .\venv\Scripts\activate.bat
 ```
 
-if doesnt activate just try to activate using this command
+if doesnt activate just try to activate using this command in powershell terminal
 
 ```
 .\venv\Scripts\activate

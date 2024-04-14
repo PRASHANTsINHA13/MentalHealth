@@ -7,6 +7,7 @@ import { randomUUID } from "node:crypto";
 import { auth } from "@/config/auth";
 import { db } from "@/db";
 import { chats, sessions } from "@/db-schemas/schema";
+import { headers } from "next/headers";
 
 export async function prompt(formData: FormData) {
   const parsedData = propmtFormSchema.safeParse(Object.fromEntries(formData));
@@ -75,12 +76,14 @@ export async function prompt(formData: FormData) {
       const params = new URLSearchParams();
       params.set("msg", prompt);
       const url = new URL("/get", process.env.AI_MODEL_URL);
-      const aiResponse = await fetch(`${url.toString()}?${params.toString()}`);
+      const aiResponse = await fetch(`${url.toString()}?${params.toString()}`, {
+        cache: "no-store",
+      });
       if (!aiResponse.ok) {
         throw new Error("some thing gone wrong in model");
       }
       const aiOutput = await aiResponse.text();
-      console.log(aiOutput);
+
       await db.insert(chats).values({
         sessionId: chatId,
         userType: "bot",

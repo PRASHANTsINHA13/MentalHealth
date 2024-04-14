@@ -1,18 +1,27 @@
 "use client";
 import { ibmPlex } from "@/ui/fonts";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormState } from "react-dom";
 import SubmitButton from "./submit-button";
 import { loginSchema } from "@/app/actions/login/models";
 import { toast } from "sonner";
+import { ErrorResponse } from "@/app/actions/login/types";
 
 function LoginForm({
   action,
 }: {
-  action: (prevState: any, formData: FormData) => Promise<string | undefined>;
+  action: (
+    prevState: undefined,
+    formData: FormData
+  ) => Promise<ErrorResponse | undefined>;
 }) {
-  const [_, formAction] = useFormState(action, undefined);
+  const [formState, formAction] = useFormState(action, undefined);
+  useEffect(() => {
+    if (formState?.type === "error") {
+      toast.error(formState.message);
+    }
+  }, [formState]);
 
   async function onFormSubmit(formData: FormData) {
     const parsedResult = loginSchema.safeParse(Object.fromEntries(formData));
