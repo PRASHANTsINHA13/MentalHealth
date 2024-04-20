@@ -7,10 +7,10 @@ function LogoutButton() {
   return (
     <button
       type="submit"
-      className="btn btn-error px-2 rounded-sm py-0.5 h-fit w-fit"
+      className="btn btn-error flex flex-row  gap-x-1 px-2 btn-sm text-sm shadow-lg rounded-sm py-0.5 h-fit w-fit hover:btn-error/75"
       disabled={pending}
     >
-      Logout
+      <span>Logout</span>
     </button>
   );
 }

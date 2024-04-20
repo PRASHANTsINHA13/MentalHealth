@@ -3,7 +3,7 @@ import Image from "next/image";
 
 function Page() {
   return (
-    <main className=" h-screen max-h-screen overflow-y-auto py-8 px-5 ">
+    <main className=" h-screen max-h-screen overflow-y-auto pb-24 pt-8 px-5 scroll-mt-20  snap-y">
       <div className="space-y-2 ">
         <Accordian accoridanName="affirmation" title="Balasana(child pose)">
           <section className="flex space-x-6">
@@ -261,13 +261,11 @@ function Accordian(
 ) {
   const { title, accoridanName, children } = props;
   return (
-    <div className="collapse collapse-plus bg-base-200 border border-primary">
+    <div className="collapse collapse-plus bg-base-200 border border-primary snap-center">
       <input type="radio" className="peer" name={accoridanName} />
       <div className="collapse-title text-xl font-medium mb-4 ">{title}</div>
 
-      <div className="collapse-content max-h-60  overflow-y-auto scrollbar-thin">
-        {children}
-      </div>
+      <div className="collapse-content   overflow-y-auto">{children}</div>
     </div>
   );
 }

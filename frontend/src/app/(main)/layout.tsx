@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "./navbar";
+import Navbar from "./nav-bar";
 
 function layout({ children }: React.PropsWithChildren) {
   return (

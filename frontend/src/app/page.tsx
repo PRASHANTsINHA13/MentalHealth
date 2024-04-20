@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import Navbar from "./NavBar";
+import Navbar from "./nav-bar";
 
 function Page() {
   return (

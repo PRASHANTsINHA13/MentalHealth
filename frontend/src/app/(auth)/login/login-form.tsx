@@ -12,7 +12,7 @@ function LoginForm({
   action,
 }: {
   action: (
-    prevState: undefined,
+    prevState: any,
     formData: FormData
   ) => Promise<ErrorResponse | undefined>;
 }) {
