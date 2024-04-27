@@ -43,9 +43,9 @@ function Form(props: {
   return (
     <main className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
       <h1
-        className={`${ibmPlex.className} mb-6 text-4xl font-semibold  bg-gradient-to-r from-primary  to-secondary inline-block text-transparent bg-clip-text`}
+        className={`${ibmPlex.className} mb-6 text-3xl text-center font-semibold  bg-gradient-to-r from-primary w-1/2  to-secondary inline-block text-transparent bg-clip-text`}
       >
-        Mental health care bot
+        Ai mental health chatbot using deep neural network
       </h1>
       <section className="w-full bg-base-300 border-base-300 rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 ">
         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">

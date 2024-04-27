@@ -5,7 +5,7 @@ import "./globals.css";
 import { inter } from "@/ui/fonts";
 
 export const metadata: Metadata = {
-  title: "Mental health care bot",
+  title: "Ai mental health chatbot using deep neural network",
 };
 
 export default function RootLayout({

@@ -17,7 +17,7 @@ async function Navbar() {
           className={`
             ${ibmPlex.className} text-xl bg-gradient-to-r from-primary  to-secondary inline-block text-transparent bg-clip-text`}
         >
-          Mental health care bot
+          Ai mental health chatbot using deep neural network
         </Link>
       </div>
       <div className="flex-none gap-2">
